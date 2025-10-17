@@ -24,3 +24,78 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+:root {
+  --primary: #0b6efd;
+  --bg: #ffffff;
+  --text: #111827;
+  --accent: #7c3aed;
+}
+
+/* High contrast */
+.a11y-high-contrast {
+  --primary: #000000;
+  --bg: #ffffff;
+  --text: #000000;
+  --accent: #000000;
+}
+.a11y-large-text {
+  font-size: 1.125rem; /* +12% */
+}
+.a11y-reduced-motion *,
+.a11y-reduced-motion *::before,
+.a11y-reduced-motion *::after {
+  animation-duration: 0.001ms !important;
+  transition-duration: 0.001ms !important;
+  scroll-behavior: auto !important;
+}
+
+/* Hide focus outlines when user disables them intentionally */
+.a11y-hide-focus :focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* color-blind filters with CSS */
+[data-color-blind="protanopia"] {
+  filter: url("#protanopia"); /* fallback if using SVG filters */
+  /* simple CSS approximation */
+  --primary: #1f4b99;
+}
+[data-color-blind="deuteranopia"] {
+  --primary: #1f4b99;
+}
+[data-color-blind="tritanopia"] {
+  --primary: #1f4b99;
+}
+[data-color-blind="achromatopsia"] {
+  filter: grayscale(100%);
+}
+
+/* Strong focus outline for keyboard */
+:root:not(.a11y-hide-focus) :focus {
+  outline: 3px solid Highlight;
+  outline-offset: 2px;
+}
+
+/* Make sure buttons and interactive elements respect contrast tokens */
+button,
+a,
+input,
+textarea {
+  color: var(--text);
+  background-color: transparent;
+}
+
+/* Example utility classes relying on tokens */
+.btn-primary {
+  background-color: var(--primary);
+  color: white;
+}
+
+/* Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
